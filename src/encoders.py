@@ -190,3 +190,44 @@ class EEGEncoder(nn.Module):
             return features, contrastive_features
         
         return features
+
+
+## mnist
+class ImageEncoder(nn.Module):
+    """Encode MNIST images (28x28 grayscale) to latent features for contrastive learning"""
+    def __init__(self, latent_dim=512):
+        super(ImageEncoder, self).__init__()
+        
+        # CNN layers for MNIST (28x28 grayscale)
+        self.conv_layers = nn.Sequential(
+            nn.Conv2d(1, 32, 3, padding=1),  # 1 channel for grayscale
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2),  # 14x14
+            
+            nn.Conv2d(32, 64, 3, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2),  # 7x7
+            
+            nn.Conv2d(64, 128, 3, padding=1),
+            nn.ReLU(),
+            nn.AdaptiveAvgPool2d((4, 4))  # 4x4
+        )
+        
+        # Projection head for contrastive learning
+        self.projection_head = nn.Sequential(
+            nn.Linear(128 * 4 * 4, 512),
+            nn.ReLU(),
+            nn.Dropout(0.3),
+            nn.Linear(512, 256),
+            nn.ReLU(),
+            nn.Dropout(0.3),
+            nn.Linear(256, latent_dim)
+        )
+    
+    def forward(self, x):
+        # x shape: (batch_size, 1, 28, 28)
+        features = self.conv_layers(x)
+        features = features.view(features.size(0), -1)  # Flatten
+        projected = self.projection_head(features)
+        return F.normalize(projected, dim=1)  # L2 normalize for contrastive learning
+
