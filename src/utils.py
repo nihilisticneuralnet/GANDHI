@@ -50,7 +50,17 @@ def triplet_loss(anchor, positive, negative, margin=1.0):
     loss = F.relu(pos_dist - neg_dist + margin)
     return loss.mean()
 
-
+# thoughtbvzi
+def load_test_data(eeg_pickle_path):
+    """Load test data separately"""
+    with open(eeg_pickle_path, 'rb') as f:
+        data_dict = pickle.load(f, encoding='latin1')
+    
+    x_test = data_dict['x_test']  # Shape: (5706, 14, 32, 1)
+    y_test = data_dict['y_test']  # Shape: (5706, 10)
+    test_class_labels = np.argmax(y_test, axis=1)
+    
+    return x_test, test_class_labels
 
 # Loss functions
 def discriminator_hinge_loss(real_output, fake_output):
