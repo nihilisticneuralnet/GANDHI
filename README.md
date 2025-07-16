@@ -1,100 +1,14 @@
-# GANDHI
-
-## Generative Adversarial Network for Decoding High-level Images from EEG signals
 # GANDHI: Generative Adversarial Network for Decoding High-level Images from EEG signals
 
-[![Python 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/release/python-370/)
-[![PyTorch](https://img.shields.io/badge/PyTorch-1.9+-red.svg)](https://pytorch.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+A deep learning framework that reconstructs visual images from EEG signals using generative adversarial networks enhanced with contrastive learning.
 
-A state-of-the-art deep learning framework that reconstructs visual images from EEG (electroencephalography) signals using generative adversarial networks enhanced with contrastive learning.
 
-## 🧠 Overview
-
-GANDHI represents a breakthrough in brain-computer interface technology, enabling the direct translation of neural activity into visual content. The system combines multiple advanced techniques:
-
-- *Dual-encoder architecture* for EEG and image feature extraction
-- *Contrastive learning* for robust cross-modal alignment
-- *Spectral normalization* for training stability
-- *Class-conditional generation* for multi-category image synthesis
-- *Advanced regularization* techniques to prevent mode collapse
-
-## 🔥 Key Features
-
-### Core Capabilities
-- *Multi-modal Learning*: Simultaneous training on EEG signals and visual images
-- *Contrastive Alignment*: InfoNCE and triplet loss for robust feature matching
-- *High-Resolution Generation*: 128×128 RGB image synthesis
-- *Class-Conditional*: Support for 1,600+ image categories
-- *Real-time Inference*: Optimized for fast EEG-to-image conversion
-
-### Technical Innovations
-- *Spectral Normalization*: Ensures discriminator Lipschitz continuity
-- *Differential Augmentation*: Prevents discriminator overfitting
-- *Mode Seeking Loss*: Reduces mode collapse in generation
-- *Feature Alignment Loss*: Bridges EEG and image feature spaces
-- *Bidirectional LSTM*: Captures temporal EEG dynamics
-
-## 🏗 Architecture
+## Architecture
 
 ### System Components
 
 
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   EEG Encoder   │    │ Image Encoder   │    │   Generator     │
-│                 │    │                 │    │                 │
-│ • BiLSTM layers │    │ • ResNet-50     │    │ • Transposed    │
-│ • FC projection │    │ • Projection    │    │   convolutions  │
-│ • Contrastive   │    │   head          │    │ • Spectral norm │
-│   features      │    │ • L2 normalize  │    │ • Class embed   │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-         │                       │                       │
-         └───────────────────────┼───────────────────────┘
-                                 │
-                    ┌─────────────────┐
-                    │ Discriminator   │
-                    │                 │
-                    │ • Conv layers   │
-                    │ • Class embed   │
-                    │ • Hinge loss    │
-                    └─────────────────┘
 
-
-### Model Specifications
-
-| Component | Architecture | Parameters | Output |
-|-----------|-------------|------------|--------|
-| EEG Encoder | BiLSTM (128→64) + FC (512) | ~2.1M | 512-dim features |
-| Image Encoder | ResNet-50 + MLP | ~25.6M | 512-dim features |
-| Generator | 5-layer TransConv | ~15.3M | 128×128×3 images |
-| Discriminator | 6-layer Conv | ~8.7M | Real/fake prediction |
-
-## 📊 Dataset Requirements
-
-### EEG Data Format
-- *Shape*: (n_samples, 4, 17, 100)
-  - n_samples: Number of EEG recordings
-  - 4: Number of trials per stimulus
-  - 17: EEG channels (electrode positions)
-  - 100: Time points (typically 1000ms at 100Hz)
-
-### Image Data Structure
-
-training_images/
-├── class_001/
-│   ├── image_001.jpg
-│   ├── image_002.jpg
-│   └── ...
-├── class_002/
-│   ├── image_001.jpg
-│   └── ...
-└── ...
-
-
-### Preprocessing Requirements
-- *EEG*: Bandpass filtered (0.5-50Hz), baseline corrected, artifacts removed
-- *Images*: RGB format, any resolution (auto-resized to 128×128)
-- *Synchronization*: EEG trials must correspond to image presentations
 
 ## 🚀 Installation
 
@@ -331,17 +245,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - *Community*: PyTorch and deep learning communities for frameworks
 - *Funding*: [Grant/Institution information if applicable]
 
-## 📞 Contact
 
-- *Lead Developer*: [Your Name] - [email@domain.com]
-- *Research Group*: [Institution/Lab Name]
-- *Project Homepage*: [https://gandhi-project.github.io](https://gandhi-project.github.io)
-
----
-
-<p align="center">
-  <img src="assets/gandhi_logo.png" alt="GANDHI Logo" width="200">
-</p>
 
 <p align="center">
   <em>Bridging the gap between neural signals and visual perception</em>
