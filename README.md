@@ -5,38 +5,7 @@ A deep learning framework that reconstructs visual images from EEG signals using
 
 ## Architecture
 
-### System Components
 
-
-
-
-## Installation
-
-### Prerequisites
-bash
-# Python 3.7 or higher
-python --version
-
-# CUDA-compatible GPU (recommended)
-nvidia-smi
-
-
-### Environment Setup
-bash
-# Clone the repository
-git clone https://github.com/yourusername/gandhi.git
-cd gandhi
-
-# Create virtual environment
-python -m venv gandhi_env
-source gandhi_env/bin/activate  # On Windows: gandhi_env\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-
-
-## Usage
 
 ### Basic Training
 python
