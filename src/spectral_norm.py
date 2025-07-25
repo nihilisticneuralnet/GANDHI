@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class SpectralNorm(nn.Module):
-    """Spectral Normalization wrapper"""
+    """Spectral Normalization"""
     def __init__(self, module, name='weight', power_iterations=1):
         super(SpectralNorm, self).__init__()
         self.module = module
@@ -55,5 +55,4 @@ class SpectralNorm(nn.Module):
         return self.module.forward(*args)
 
 def spectral_norm(module, name='weight', power_iterations=1):
-    """Apply spectral normalization to a module"""
     return SpectralNorm(module, name, power_iterations)
