@@ -76,5 +76,4 @@ def cosine_similarity_loss(eeg_features, img_features):
     img_norm = F.normalize(img_features, dim=1)    
     similarity = F.cosine_similarity(eeg_norm, img_norm, dim=1)
     
-    # Return negative similarity (we want to maximize similarity)
     return -similarity.mean()
