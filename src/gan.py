@@ -8,16 +8,12 @@ class Generator(nn.Module):
     def __init__(self, eeg_dim=512, noise_dim=100, n_classes=1654):
         super(Generator, self).__init__()
         
-        # Class embedding
         self.class_embedding = nn.Embedding(n_classes, 50)
         
-        # Combine EEG features, noise, and class
         input_dim = eeg_dim + noise_dim + 50
         
-        # Initial projection
         self.fc = nn.Linear(input_dim, 8 * 8 * 1024)
         
-        # Transposed convolution layers
         self.convt1 = spectral_norm(nn.ConvTranspose2d(1024, 512, 4, 2, 1, bias=False))
         self.bn1 = nn.BatchNorm2d(512)
         
@@ -36,17 +32,13 @@ class Generator(nn.Module):
         self.tanh = nn.Tanh()
         
     def forward(self, eeg_features, noise, class_labels):
-        # Embed class labels
         class_emb = self.class_embedding(class_labels)
         
-        # Combine all inputs
         x = torch.cat([eeg_features, noise, class_emb], dim=1)
         
-        # Initial projection and reshape
         x = self.fc(x)
         x = x.view(-1, 1024, 8, 8)
         
-        # Transposed convolutions with batch norm and activation
         x = self.leaky_relu(self.bn1(self.convt1(x)))  # 16x16
         x = self.leaky_relu(self.bn2(self.convt2(x)))  # 32x32
         x = self.leaky_relu(self.bn3(self.convt3(x)))  # 64x64
@@ -60,11 +52,9 @@ class Discriminator(nn.Module):
     def __init__(self, n_classes=1654):
         super(Discriminator, self).__init__()
         
-        # Class embedding
         self.class_embedding = nn.Embedding(n_classes, 50)
         self.class_projection = nn.Linear(50, 128 * 128)
         
-        # Convolutional layers
         self.conv1 = nn.Conv2d(4, 64, 3, 2, 1, bias=False)  # 4 channels (3 RGB + 1 class)
         self.conv2 = nn.Conv2d(64, 128, 3, 2, 1, bias=False)
         self.bn2 = nn.BatchNorm2d(128)
@@ -85,15 +75,12 @@ class Discriminator(nn.Module):
     def forward(self, x, class_labels):
         batch_size = x.size(0)
         
-        # Embed and project class labels
         class_emb = self.class_embedding(class_labels)
         class_map = self.class_projection(class_emb)
         class_map = class_map.view(batch_size, 1, 128, 128)
         
-        # Concatenate image with class map
         x = torch.cat([x, class_map], dim=1)
         
-        # Convolutional layers
         x = self.leaky_relu(self.conv1(x))
         x = self.leaky_relu(self.bn2(self.conv2(x)))
         x = self.leaky_relu(self.bn3(self.conv3(x)))
