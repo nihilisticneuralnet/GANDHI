@@ -58,7 +58,7 @@ The project implements a sophisticated pipeline that:
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/GANDHI.git
+git clone https://github.com/nihilisticneuralnet/GANDHI.git
 cd GANDHI
 ```
 
