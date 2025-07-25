@@ -208,7 +208,7 @@ python main.py
 from src.main import train_gan_with_mnist
 
 # Train on ThoughtViz dataset
-eeg_encoder, image_encoder, generator, discriminator = train(
+eeg_encoder, image_encoder, generator, discriminator = train_gan_with_mnist(
     eeg_pickle_path="data/thoughtviz/data.pkl",
     num_epochs=100,
     batch_size=64,
