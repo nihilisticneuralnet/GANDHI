@@ -354,7 +354,7 @@ def train_gan_with_contrastive_modified(eeg_pickle_path, images_dir, num_epochs=
 
 
 if __name__ == "__main__":
-    main()
+    train_gan_with_contrastive_modified()
 
 
 
