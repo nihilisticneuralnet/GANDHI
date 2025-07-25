@@ -23,7 +23,7 @@ from utils import (
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using device: {device}")
 
-# def train_gan_with_contrastive(eeg_file_path, images_dir, num_epochs=100, batch_size=32, lr=0.0002):
+# def train(eeg_file_path, images_dir, num_epochs=100, batch_size=32, lr=0.0002):
 #     dataset = EEGImageDataset(eeg_file_path, images_dir)
 #     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=4)
     
@@ -168,46 +168,10 @@ print(f"Using device: {device}")
     
 #     return eeg_encoder, image_encoder, generator, discriminator
 
-# def main():
-#     eeg_file_path = "/kaggle/input/dongyangli-deleeg-image-decode/sub-01/sub-01/preprocessed_eeg_training.npy"
-#     images_dir = "/kaggle/input/dongyangli-deleeg-image-decode/osfstorage-archive/training_images/training_images"
-    
-#     print("Training EEG-to-Image GAN with Contrastive Learning...")
-#     print("="*60)
-    
-#     eeg_encoder, image_encoder, generator, discriminator = train_gan_with_contrastive(
-#         eeg_file_path=eeg_file_path,
-#         images_dir=images_dir,
-#         num_epochs=80,  
-#         batch_size=64,  
-#         lr=0.0002
-#     )
-    
-#     torch.save({
-#         'eeg_encoder': eeg_encoder.state_dict(),
-#         'image_encoder': image_encoder.state_dict(),
-#         'generator': generator.state_dict(),
-#         'discriminator': discriminator.state_dict()
-#     }, 'eeg_to_image_gan_contrastive.pth')
-    
-#     print("\nTraining completed and models saved!")
-    
-#     dataset = EEGImageDataset(eeg_file_path, images_dir)
-    
-#     print("\nEvaluating EEG-Image feature alignment...")
-#     avg_similarity, similarities = evaluate_contrastive_alignment(
-#         eeg_encoder, image_encoder, dataset, num_samples=200
-#     )
-    
-#     print("\nGenerating visualizations...")
-#     visualize_generated_samples(eeg_encoder, generator, dataset, num_samples=8)
-    
-#     visualize_feature_space(eeg_encoder, image_encoder, dataset, num_samples=500)
-#     print(f"Average feature alignment score: {avg_similarity:.4f}")
 
 
 # Thoughtviz
-def train_gan_with_contrastive_modified(eeg_pickle_path, images_dir, num_epochs=100, batch_size=32, lr=0.0002):
+def train(eeg_pickle_path, images_dir, num_epochs=100, batch_size=32, lr=0.0002):
     dataset = EEGImageDataset(eeg_pickle_path, images_dir)
     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=4)
     
@@ -352,9 +316,45 @@ def train_gan_with_contrastive_modified(eeg_pickle_path, images_dir, num_epochs=
     
     return eeg_encoder, image_encoder, generator, discriminator
 
+def main():
+    eeg_file_path = "/kaggle/input/dongyangli-deleeg-image-decode/sub-01/sub-01/preprocessed_eeg_training.npy"
+    images_dir = "/kaggle/input/dongyangli-deleeg-image-decode/osfstorage-archive/training_images/training_images"
+    
+    print("Training EEG-to-Image GAN with Contrastive Learning...")
+    print("="*60)
+    
+    eeg_encoder, image_encoder, generator, discriminator = train(
+        eeg_file_path=eeg_file_path,
+        images_dir=images_dir,
+        num_epochs=80,  
+        batch_size=64,  
+        lr=0.0002
+    )
+    
+    torch.save({
+        'eeg_encoder': eeg_encoder.state_dict(),
+        'image_encoder': image_encoder.state_dict(),
+        'generator': generator.state_dict(),
+        'discriminator': discriminator.state_dict()
+    }, 'eeg_to_image_gan_contrastive.pth')
+    
+    print("\nTraining completed and models saved!")
+    
+    dataset = EEGImageDataset(eeg_file_path, images_dir)
+    
+    print("\nEvaluating EEG-Image feature alignment...")
+    avg_similarity, similarities = evaluate_contrastive_alignment(
+        eeg_encoder, image_encoder, dataset, num_samples=200
+    )
+    
+    print("\nGenerating visualizations...")
+    visualize_generated_samples(eeg_encoder, generator, dataset, num_samples=8)
+    
+    visualize_feature_space(eeg_encoder, image_encoder, dataset, num_samples=500)
+    print(f"Average feature alignment score: {avg_similarity:.4f}")
 
 if __name__ == "__main__":
-    train_gan_with_contrastive_modified()
+    main()
 
 
 
