@@ -169,13 +169,13 @@ graph TB
 ## Datasets
 
 ### 1. ThoughtViz Dataset
-- **Source**: [ThoughtViz Repository](https://github.com/ptirupat/ThoughtViz)
+- **Source**: [ThoughtViz](https://github.com/ptirupat/ThoughtViz)
 - **Content**: EEG recordings paired with MNIST digit and ImageNet images
 - **Format**: Pickle files with preprocessed EEG data
 - **Classes**: 10 classes
 
 ### 2. EEG_Image_decode Dataset
-- **Source**: [EEG_Image_decode Repository](https://github.com/dongyangli-del/EEG_Image_decode)
+- **Source**: [EEG_Image_decode](https://github.com/dongyangli-del/EEG_Image_decode)
 - **Content**: EEG recordings with natural image stimuli
 - **Format**: NumPy arrays and image directories
 - **Classes**: Multiple object categories from ImageNet
@@ -217,6 +217,18 @@ eeg_encoder, image_encoder, generator, discriminator = train(
 ```
 
 ## Results and Evaluation
+
+## Outputs
+
+- [ThoughtViz MNIST](https://github.com/ptirupat/ThoughtViz)
+<img src="outputs/output_mnist.png" alt="Output Image"/>
+
+- [ThoughtViz ImageNet](https://github.com/ptirupat/ThoughtViz)
+<img src="outputs/output_imagenet.png" alt="Output Image"/>
+
+
+- [EEG_Image_decode](https://github.com/dongyangli-del/EEG_Image_decode)
+<img src="outputs/output.png" alt="Output Image" />
 
 ### Metrics
 - **Contrastive Alignment**: Cosine similarity between EEG and image features
