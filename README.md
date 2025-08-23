@@ -12,11 +12,7 @@ The project implements a sophisticated pipeline that:
 ## Architecture
 
 <p align="center">
-  <img src="img/cl_train.png" alt="Output Image"/>
-</p>
-
-<p align="center">
-  <img src="img/gan_train.png" alt="Output Image"/>
+  <img src="img/archflow.png" alt="Output Image"/>
 </p>
 
 
