@@ -79,12 +79,14 @@ eeg_encoder, image_encoder, generator, discriminator = train_gan_with_mnist(
 - [ThoughtViz MNIST](https://github.com/ptirupat/ThoughtViz)
 <img src="outputs/output_mnist.png" alt="Output Image"/>
 
+<!--
 - [ThoughtViz ImageNet](https://github.com/ptirupat/ThoughtViz)
 <img src="outputs/output_imagenet.png" alt="Output Image"/>
 
 
 - [EEG_Image_decode](https://github.com/dongyangli-del/EEG_Image_decode)
 <img src="outputs/output.png" alt="Output Image" />
+-->
 
 ### Metrics
 - **Contrastive Alignment**: Cosine similarity between EEG and image features
